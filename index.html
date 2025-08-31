@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRF Synthesizer (Aristotle Demo)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4 md:p-8">
+
+    <div id="app" class="w-full max-w-7xl mx-auto">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold">PRF Synthesizer (Aristotle Demo)</h1>
+            <p class="text-gray-600 mt-2">This is a pre-populated example to demonstrate the potential of the PRF analysis.</p>
+        </div>
+
+        <!-- Main Workspace -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column: Info -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold mb-4">About This Demo</h2>
+                    <p class="text-gray-700 mb-4">The text in these boxes has been pre-filled with reflections from the perspective of Aristotle, based on his extensive writings on philosophy and science.</p>
+                    <p class="text-gray-700">Notice how his framework is built on a systematic approach to knowledge, integrating empirical observation with rational analysis. This is the level of detail to aim for in your own work.</p>
+                </div>
+                 <div class="card p-6">
+                    <h2 class="text-xl font-bold mb-4">Your Task</h2>
+                    <p class="text-gray-700">Read through these reflections and the sample synthesis. Then, read the AI's feedback to see how it identifies themes and asks deeper questions. Use this as a model for your own PRF project.</p>
+                </div>
+            </div>
+
+            <!-- Right Column: Synthesis & Analysis -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold mb-4">Review of Pre-populated Data</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-[400px] overflow-y-auto p-2 bg-gray-50 rounded-lg">
+                        <textarea id="beliefs-display" class="w-full h-full p-2 border rounded-md bg-white" readonly></textarea>
+                        <textarea id="rules-display" class="w-full h-full p-2 border rounded-md bg-white" readonly></textarea>
+                        <textarea id="ontology-display" class="w-full h-full p-2 border rounded-md bg-white" readonly></textarea>
+                        <textarea id="authenticity-display" class="w-full h-full p-2 border rounded-md bg-white" readonly></textarea>
+                        <textarea id="assembly_history-display" class="w-full h-full p-2 border rounded-md bg-white" readonly></textarea>
+                        <textarea id="future_pull-display" class="w-full h-full p-2 border rounded-md bg-white" readonly></textarea>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold mb-4">Sample Synthesis</h2>
+                    <textarea id="synthesis-input" class="w-full h-80 p-3 border border-gray-300 rounded-lg" readonly></textarea>
+                    
+                    <div id="ai-analysis-card" class="mt-6">
+                        <h3 class="font-semibold mb-2 text-indigo-700 text-xl">Sample AI Analysis & Feedback</h3>
+                        <div id="ai-analysis-display" class="w-full min-h-[100px] p-3 bg-gray-50 border rounded-lg whitespace-pre-wrap"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const displays = {
+                beliefs: document.getElementById('beliefs-display'),
+                rules: document.getElementById('rules-display'),
+                ontology: document.getElementById('ontology-display'),
+                authenticity: document.getElementById('authenticity-display'),
+                assembly_history: document.getElementById('assembly_history-display'),
+                future_pull: document.getElementById('future_pull-display'),
+                synthesis: document.getElementById('synthesis-input'),
+                ai: document.getElementById('ai-analysis-display'),
+            };
+
+            const demoData = {
+                beliefs: `My foundational belief is that all knowledge begins with sensory experience of the actual world. While I respect rational analysis, as taught at the Academy, I believe ultimate truth is discovered through careful, empirical observation. All domains of knowledge—from the movement of the stars to the organization of a city-state—form a single, interconnected system. The highest purpose of this knowledge is not abstract contemplation, but the cultivation of 'phronesis' or practical wisdom, which enables true human flourishing.`,
+                rules: `My primary rule is to seek the 'mean' between two extremes, for in this middle way, virtue is typically found. My method of inquiry follows a clear rule-system: begin with observation of particulars, use induction to derive general principles, then apply these principles deductively to understand new phenomena. Any theoretical conclusion must be tested against the realities of the world. A political theory is only as good as the actual constitutions it can explain, and an ethical principle is only valid if it leads to a flourishing life.`,
+                ontology: `My understanding of reality is grounded in individual substances—this person, this tree, this animal. These substances possess essential properties that make them what they are. To explain any substance fully, one must understand its four causes: its matter, its form, its origin, and its purpose (telos). Everything in nature has a purpose, and development is simply the process of a substance moving from potentiality to the actuality of its purpose. This creates a natural, hierarchical order to reality, where all levels are real and worthy of study.`,
+                authenticity: `For me, an authentic life is an integrated one, where intellectual, ethical, and political development are harmonized. Authentic knowledge is not a private possession; it must be systematically complete and include the pedagogical responsibility to teach others. It must be effective, enabling one to act wisely in the world rather than remaining in pure speculation. To be authentic is to actualize one's full human potential as a rational, social, and contemplative being.`,
+                assembly_history: `My framework was assembled from two powerful, sometimes conflicting, sources. My father's role as a court physician instilled in me a deep respect for empirical observation and understanding systems through their functions. Later, my twenty years at Plato's Academy provided rigorous training in logic and systematic thought. While I ultimately rejected Plato's Theory of Forms, the tension between his idealism and my inherited empiricism was the crucible in which my own philosophy was forged. This synthesis was further refined by my practical experience tutoring Alexander and establishing the Lyceum as a center for collaborative, empirical research.`,
+                future_pull: `My 'future pull' was the creation of a permanent legacy of knowledge for future generations. I systematically organized my writings and founded the Lyceum not for immediate fame, but to establish a durable model for how knowledge should be researched, taught, and developed. My work tutoring Alexander was driven by the hope of influencing a political system that could enable human flourishing on a grand scale. My aim was always to build systems—of logic, of science, of ethics—that would outlive me and continue to serve humanity.`,
+                synthesis: `My Personal Reality Framework is a synthesis of the empirical and the rational, forged in the crucible of my assembly history. My core belief in knowledge grounded in observation—a gift from my medical heritage—was given structure by the systematic rules of logic I refined after my time in Plato's Academy. My ontology, which sees the world as composed of individual substances striving to actualize their purpose, is the foundation of my ethics. An authentic life, therefore, is one that actualizes its full potential, achieving a state of 'eudaimonia' or human flourishing.\n\nThis entire framework is driven by a future pull: the creation of lasting systems of knowledge. The Lyceum was the practical manifestation of this—an institution designed to systematically investigate the world, from biology to politics, in order to cultivate the practical wisdom necessary for a good life. My work is a testament to the belief that the contemplative and active lives are not separate, but are two integrated parts of a single, authentic existence.`,
+                ai: `Thank you for these systematic and comprehensive reflections. Your framework demonstrates a profound integration of observation, reason, and purpose.\n\n**Key Themes:**\n1.  **Systematic Integration:** A powerful theme is your belief that all knowledge is interconnected and must be organized systematically. You apply this principle to everything from biology to ethics, creating a unified and comprehensive worldview.\n2.  **Empirical Grounding:** You consistently emphasize that knowledge must begin with and be tested against the observation of the actual world. This grounds your entire philosophical system in tangible reality.\n3.  **Teleological Purpose (Telos):** The idea that everything has an inherent purpose is central to your framework. This teleological view shapes your understanding of ethics (the purpose of man is to flourish), politics (the purpose of the state is the good life), and nature itself.\n\n**Potential Tensions:**\n- Your framework is built on a strong sense of natural hierarchy and order. However, your own methodology relies on the empirical observation of a vast diversity of life forms and political systems. How do you reconcile your hierarchical ontological commitments with the sheer variety and apparent non-hierarchical complexity you observe in the world?\n\n**A Question for Deeper Synthesis:**\n- You state that the highest aim of knowledge is 'phronesis' or practical wisdom. How might your four-cause analysis be applied not just to objects in the world, but to the cultivation of practical wisdom itself within a student or citizen? What is its matter, form, efficient cause, and final cause?`
+            };
+
+            Object.keys(displays).forEach(key => {
+                if (demoData[key]) {
+                    displays[key].value = demoData[key];
+                    displays[key].textContent = demoData[key];
+                }
+            });
+        });
+    </script>
+</body>
+</html>
