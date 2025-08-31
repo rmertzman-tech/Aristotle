@@ -41,7 +41,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <div class="lg-col-span-1 space-y-6">
+            <div class="lg:col-span-1 space-y-6">
                 <div class="card p-6">
                     <h2 class="text-xl font-bold mb-4">About This Demo</h2>
                     <p class="text-gray-700 mb-4">The text in these boxes has been pre-filled with reflections from the perspective of Aristotle, based on his extensive philosophical writings.</p>
@@ -103,6 +103,7 @@
                 ai: `Thank you for these systematic and comprehensive reflections. Your framework demonstrates a profound and integrated approach to understanding reality and living a virtuous life.\n\n**Key Themes:**\n1.  **Empirical Grounding:** A central theme is your unwavering commitment to grounding all knowledge in the observation of the natural world. You consistently prioritize the study of 'what is' as the starting point for understanding 'what ought to be'.\n2.  **Teleology (Purpose):** Your entire framework is animated by the concept of 'telos' or purpose. You see everything, from the growth of a plant to the structure of a state, as being organized by its final cause or ultimate aim.\n3.  **Systematic Integration:** You have a powerful drive to create a unified system of knowledge. You don't see ethics, politics, biology, and logic as separate domains, but as interconnected parts of a single, comprehensible reality.\n\n**Potential Tensions:**\n- Your ethical and political theories are based on the ideal of the Greek 'polis' or city-state. However, your most famous student, Alexander the Great, went on to create a massive, multicultural empire that shattered the polis as the primary unit of political life. How did your framework account for this new reality that seemed to contradict the foundations of your political philosophy?\n\n**A Question for Deeper Synthesis:**\n- You argue that the highest form of human life is one of rational contemplation. Yet, you also argue that humans are fundamentally 'political animals' who can only flourish within a community. How do you resolve the potential tension between the solitary, contemplative life of the philosopher and the active, engaged life of the citizen? Which is ultimately more essential to achieving eudaimonia?`
             };
 
+            const DEMO_NAME = 'Aristotle';
             const loadDemoBtn = document.getElementById('load-demo-btn');
             const DATA_KEYS = {
                 beliefs: 'prf_beliefs_data',
@@ -112,6 +113,7 @@
                 assembly_history: 'prf_assembly_history_data',
                 future_pull: 'prf_future_pull_data'
             };
+            const DEMO_NAME_KEY = 'prf_current_demo_name';
 
             function showMessage(message, type = 'success') {
                 const toast = document.createElement('div');
@@ -133,10 +135,11 @@
 
             loadDemoBtn.addEventListener('click', () => {
                 try {
+                    localStorage.setItem(DEMO_NAME_KEY, DEMO_NAME);
                     Object.keys(DATA_KEYS).forEach(key => {
                         localStorage.setItem(DATA_KEYS[key], demoData[key]);
                     });
-                    showMessage('Demo data has been successfully saved to your browser. You can now load it in the main PRF Synthesizer app.');
+                    showMessage('Demo data has been successfully saved. You can now load it in the main PRF Synthesizer app.');
                 } catch (e) {
                     console.error("Error saving to localStorage:", e);
                     showMessage('Could not save demo data. Your browser may be in private mode or have storage disabled.', 'error');
@@ -146,4 +149,3 @@
     </script>
 </body>
 </html>
-
